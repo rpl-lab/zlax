@@ -1,0 +1,10 @@
+type 'a jax_array
+
+val vmap : (('a -D-> 'b) * int) -> 'a jax_array -D-> 'b jax_array
+(* (Function to be mapped * vectorization size = number of instances) -> args -D-> output *)
+
+val grad : ('a -D-> 'b) -S-> 'a -D-> 'c
+(* function to be differentiated -S-> args -> output *)
+
+val array : 'a -> 'b jax_array
+(* tuple of values -> jax array that contains all the values contained in the tuple, in the same order *)
