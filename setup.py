@@ -3,9 +3,9 @@ from setuptools import setup
 setup(
     name="zlax",
     version="2.2",
-    packages=["zlax"],
+    packages=["zlax", "probzelus"],
     description="Librairies for the Python backend of Zelus using JAX.",
     author="Reyyan Tekin",
-    url="https://github.com/INRIA/zelus",
+    url="https://github.com/rpl-lab/zlax",
     install_requires=["jax"]
 )
