@@ -5,6 +5,7 @@ from jax.lax import cond
 from typing import Any
 from sys import stdin, stdout, stderr
 from dataclasses import dataclass
+from enum import Enum, auto
 
 from .muflib import Node, step, reset, init, register_pytree_node_dataclass, J_dataclass
 from jax.tree_util import register_pytree_node_class
@@ -77,10 +78,10 @@ def snd(x):
     return x[1]
 
 def max_float(x):
-    return (lambda y : max(x, y))
+    return (lambda y : np.max(x, y))
 
 def min_float(x):
-    return (lambda y : min(x, y))
+    return (lambda y : np.min(x, y))
 
 max_int = max_float
 min_int = min_float
@@ -146,26 +147,29 @@ def epsilon_float():
     return np.finfo(float).eps
 
 
+@register_pytree_node_dataclass
+class Fpclass(J_dataclass):
+    pass
+FP_normal = Fpclass(1)
+FP_subnormal = Fpclass(2)
+FP_zero = Fpclass(3)
+FP_infinite = Fpclass(4)
+FP_nan = Fpclass(5)
+    
 def classify_float(x):
-    class Fpclass(Enum):
-        FP_normal = auto()
-        FP_subnormal = auto()
-        FP_zero = auto()
-        FP_infinite = auto()
-        FP_nan = auto()
-    cond(np.isinf(x),
-         lambda _: FP_infinite,
-         lambda _: cond(np.isnan(x),
-                        lambda _: FP_nan,
-                        lambda _: cond(np.close(0.0, x),
-                                       lambda _: FP_subnormal,
-                                       lambda _: cond(np.equal(0, x),
-                                                      lambda _: FP_zero,
-                                                      lambda _: FP_normal,
-                                                      None),
-                                       None),
-                        None),
-         None)
+    return cond(np.isinf(x),
+                lambda _: FP_infinite,
+                lambda _: cond(np.isnan(x),
+                               lambda _: FP_nan,
+                               lambda _: cond(np.equal(0, x),
+                                              lambda _: FP_zero,
+                                              lambda _: cond(np.isclose(0.0, x),
+                                                             lambda _: FP_subnormal,
+                                                             lambda _: FP_normal,
+                                                             None),
+                                              None),
+                               None),
+                None)
 
 
 # type option, None already exists in Python
@@ -502,7 +506,7 @@ def compare(x):
     return _f
 
 
-# Functions bellow seem depreciated in OCaml
+# TODO
 # val ( on ) : zero -> bool -> zero
 # val orz : zero -> zero -> zero
 
