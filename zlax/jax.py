@@ -1,7 +1,8 @@
 from zlax.std import *
 from jax import grad as jgrad
 from jax import vmap as jvmap
-from jax.numpy import array, empty
+from jax.numpy import empty
+from jax.numpy import array as np_array
 
 
 def grad(f):
@@ -44,5 +45,5 @@ def vmap(f, n):
     return Vmap_node
 
 
-def array(x):
-    return array(*x)
+def array(*x):
+    return np_array(x)
