@@ -44,7 +44,8 @@ def int_of_char(x):
     return int(x)
 
 def char_of_int(x):
-    return char(x)
+    assert x >=0 and x <= 255
+    return chr(x)
 
 def string_of_bool(x):
     return str(x)
