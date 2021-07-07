@@ -1,0 +1,44 @@
+#!python3
+
+from importlib.machinery import SourceFileLoader
+from argparse import ArgumentParser
+from zlax.muflib import init, step
+import os, subprocess, shlex
+
+def main():
+    endless = True
+    parser = ArgumentParser(description="zluciole")
+    parser.add_argument("file")
+    parser.add_argument('-prob', action='store_true', help='Simulate ProbZelus code')
+    parser.add_argument('-n', metavar='num', type=int, nargs=1, help='Number of steps, endless if not given')
+    parser.add_argument('-s', metavar='node', type=str, nargs=1, help='Node to simulate (required)', required=True)
+    parsed = parser.parse_args()
+    if parsed.n is not None:
+        n_steps = parsed.n[0]
+        assert (n_steps >= 0)
+        endless = False
+    if parsed.prob:
+        zlc = "probzeluc"
+    else : 
+        zlc = "zeluc"
+    main_node = parsed.s[0]
+
+    # Compile to Python
+    cmd = "{} -I `zeluc -where`-jax -mufpy {}".format(zlc, parsed.file)
+    print("Compile {} to Python :\n{}".format(parsed.file, cmd))
+    subprocess.run(cmd, shell=True)
+
+    # Import the node to simulate from the previously compiled Python file
+    pyfile = os.path.splitext(parsed.file)[0] + ".py"
+    module = SourceFileLoader("mufpy_module", pyfile).load_module()
+    s = init(getattr(module, main_node))
+
+    # Simulation loop
+    i = 0
+    while endless or i < n_steps :
+        s, _ = step(s, ())
+        i += 1
+
+
+if __name__ == "__main__":
+    main()

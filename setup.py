@@ -4,6 +4,7 @@ setup(
     name="zlax",
     version="2.2",
     packages=["zlax", "probzelus"],
+    scripts=['zluciole'],
     description="Librairies for the Python backend of Zelus using JAX.",
     author="Reyyan Tekin",
     url="https://github.com/rpl-lab/zlax",

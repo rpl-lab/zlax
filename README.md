@@ -12,3 +12,5 @@ zeluc -I `zeluc -where`-jax -mufpy <name>.zls
 # Zelus with probability
 probzeluc -I `zeluc -where`-jax -mufpy <name>.zls
 ```
+
+Simulate zelus code : `zluciole`. See usage using the `-h` option.
