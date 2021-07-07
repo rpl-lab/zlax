@@ -1,0 +1,352 @@
+val abs : 'x -> 'r
+val absolute : 'x -> 'r
+val add : 'x1 * 'x2 -> 'r
+val all : 'a -> 'r
+val allclose : 'a * 'b -> 'r
+val alltrue : 'a -> 'r
+val amax : 'a -> 'r
+val amin : 'a -> 'r
+val angle : 'z -> 'r
+val any : 'a -> 'r
+val append : 'arr * 'valueues -> 'r
+val apply_along_axis : 'func1d * 'axis * 'arr * 'xargs -> 'r
+val apply_over_axes : 'func * 'a * 'axes -> 'r
+val arange : 'start -> 'r
+val arccos : 'x -> 'r
+val arccosh : 'x -> 'r
+val arcsin : 'x -> 'r
+val arcsinh : 'x -> 'r
+val arctan : 'x -> 'r
+val arctan2 : 'x1 * 'x2 -> 'r
+val arctanh : 'x -> 'r
+val argmax : 'a -> 'r
+val argmin : 'a -> 'r
+val argsort : 'a -> 'r
+val argwhere : 'a -> 'r
+val around : 'a -> 'r
+val array : 'object -> 'r
+val array_equal : 'a1 * 'a2 -> 'r
+val array_equiv : 'a1 * 'a2 -> 'r
+val array_repr : 'arr -> 'r
+val array_split : 'ary * 'indices_or_sections -> 'r
+val array_str : 'a -> 'r
+val asarray : 'a -> 'r
+val atleast_1d : 'xarys -> 'r
+val atleast_2d : 'xarys -> 'r
+val atleast_3d : 'xarys -> 'r
+val average : 'a -> 'r
+val bartlett : 'xargs_kwargs -> 'r
+val bincount : 'x -> 'r
+val bitwise_and : 'x1 * 'x2 -> 'r
+val bitwise_not : 'x -> 'r
+val bitwise_or : 'x1 * 'x2 -> 'r
+val bitwise_xor : 'x1 * 'x2 -> 'r
+val blackman : 'xargs_kwargs -> 'r
+val block : 'arrays -> 'r
+val bool_ : 'x -> 'r
+val broadcast_arrays : 'xargs -> 'r
+val broadcast_shapes : 'xshapes -> 'r
+val broadcast_to : 'arr * 'shape -> 'r
+val can_cast : 'from_ * 'to -> 'r
+val cbrt : 'x -> 'r
+val ceil : 'x -> 'r
+val character : 'x -> 'r
+val choose : 'a * 'choices -> 'r
+val clip : 'a -> 'r
+val column_stack : 'tup -> 'r
+val complex128 : 'x -> 'r
+val complex64 : 'x -> 'r
+val complexfloating : 'x -> 'r
+val compress : 'condition * 'a -> 'r
+val concatenate : 'arrays -> 'r
+val conj : 'x -> 'r
+val conjugate : 'x -> 'r
+val convolve : 'a * 'v -> 'r
+val copysign : 'x1 * 'x2 -> 'r
+val corrcoef : 'x -> 'r
+val correlate : 'a * 'v -> 'r
+val cos : 'x -> 'r
+val cosh : 'x -> 'r
+val count_nonzero : 'a -> 'r
+val cov : 'm -> 'r
+val cross : 'a * 'b -> 'r
+val cumprod : 'a -> 'r
+val cumproduct : 'a -> 'r
+val cumsum : 'a -> 'r
+val deg2rad : 'x -> 'r
+val degrees : 'x -> 'r
+val delete : 'arr * 'obj -> 'r
+val diag : 'v -> 'r
+val diagflat : 'v -> 'r
+val diag_indices : 'n -> 'r
+val diag_indices_from : 'arr -> 'r
+val diagonal : 'a -> 'r
+val diff : 'a -> 'r
+val digitize : 'x * 'bins -> 'r
+val divide : 'x1 * 'x2 -> 'r
+val divmod : 'x1 * 'x2 -> 'r
+val dot : 'a * 'b -> 'r
+val dsplit : 'ary * 'indices_or_sections -> 'r
+val dstack : 'tup -> 'r
+val dtype : 'obj -> 'r
+val ediff1d : 'ary -> 'r
+val einsum : 'xoperands -> 'r
+val einsum_path : 'subscripts * 'xoperands -> 'r
+val empty : 'shape -> 'r
+val empty_like : 'a -> 'r
+val equal : 'x1 * 'x2 -> 'r
+val exp : 'x -> 'r
+val exp2 : 'x -> 'r
+val expand_dims : 'a * 'axis -> 'r
+val expm1 : 'x -> 'r
+val extract : 'condition * 'arr -> 'r
+val eye : 'n -> 'r
+val fabs : 'x -> 'r
+val finfo : 'dtype -> 'r
+val fix : 'x -> 'r
+val flatnonzero : 'a -> 'r
+val flexible : 'x -> 'r
+val flip : 'm -> 'r
+val fliplr : 'm -> 'r
+val flipud : 'm -> 'r
+val float16 : 'x -> 'r
+val float32 : 'x -> 'r
+val float64 : 'x -> 'r
+val floating : 'x -> 'r
+val float_power : 'x1 * 'x2 -> 'r
+val floor : 'x -> 'r
+val floor_divide : 'x1 * 'x2 -> 'r
+val fmax : 'x1 * 'x2 -> 'r
+val fmin : 'x1 * 'x2 -> 'r
+val fmod : 'x1 * 'x2 -> 'r
+val frexp : 'x -> 'r
+val full : 'shape * 'fill_value -> 'r
+val full_like : 'a * 'fill_value -> 'r
+val gcd : 'x1 * 'x2 -> 'r
+val geomspace : 'start * 'stop -> 'r
+val gradient : 'f * 'xvarargs -> 'r
+val greater : 'x1 * 'x2 -> 'r
+val greater_equal : 'x1 * 'x2 -> 'r
+val hamming : 'xargs_kwargs -> 'r
+val hanning : 'xargs_kwargs -> 'r
+val heaviside : 'x1 * 'x2 -> 'r
+val histogram : 'a -> 'r
+val histogram_bin_edges : 'a -> 'r
+val histogram2d : 'x * 'y -> 'r
+val histogramdd : 'sample -> 'r
+val hsplit : 'ary * 'indices_or_sections -> 'r
+val hstack : 'tup -> 'r
+val hypot : 'x1 * 'x2 -> 'r
+val i0 : 'x -> 'r
+val identity : 'n -> 'r
+val iinfo : 'typ -> 'r
+val imag : 'value -> 'r
+val in1d : 'ar1 * 'ar2 -> 'r
+val indices : 'dimensions -> 'r
+val inexact : 'x -> 'r
+val inner : 'a * 'b -> 'r
+val int16 : 'x -> 'r
+val int32 : 'x -> 'r
+val int64 : 'x -> 'r
+val int8 : 'x -> 'r
+val integer : 'x -> 'r
+val interp : 'x * 'xp * 'fp -> 'r
+val intersect1d : 'ar1 * 'ar2 -> 'r
+val invert : 'x -> 'r
+val isclose : 'a * 'b -> 'r
+val iscomplex : 'x -> 'r
+val iscomplexobj : 'x -> 'r
+val isfinite : 'x -> 'r
+val isin : 'element * 'test_elements -> 'r
+val isinf : 'x -> 'r
+val isnan : 'x -> 'r
+val isneginf : 'x -> 'r
+val isposinf : 'x -> 'r
+val isreal : 'x -> 'r
+val isrealobj : 'x -> 'r
+val isscalar : 'element -> 'r
+val issubdtype : 'arg1 * 'arg2 -> 'r
+val issubsctype : 'arg1 * 'arg2 -> 'r
+val iterable : 'y -> 'r
+val ix_ : 'xargs -> 'r
+val kaiser : 'xargs_kwargs -> 'r
+val kron : 'a * 'b -> 'r
+val lcm : 'x1 * 'x2 -> 'r
+val ldexp : 'x1 * 'x2 -> 'r
+val left_shift : 'x1 * 'x2 -> 'r
+val less : 'x1 * 'x2 -> 'r
+val less_equal : 'x1 * 'x2 -> 'r
+val lexsort : 'keys -> 'r
+val linspace : 'start * 'stop -> 'r
+val load : 'file -> 'r
+val log : 'x -> 'r
+val log10 : 'x -> 'r
+val log1p : 'x -> 'r
+val log2 : 'x -> 'r
+val logical_and : 'xargs -> 'r
+val logical_not : 'xargs -> 'r
+val logical_or : 'xargs -> 'r
+val logical_xor : 'xargs -> 'r
+val logspace : 'start * 'stop -> 'r
+val mask_indices : 'xargs_kwargs -> 'r
+val matmul : 'a * 'b -> 'r
+val max : 'a -> 'r
+val maximum : 'x1 * 'x2 -> 'r
+val mean : 'a -> 'r
+val median : 'a -> 'r
+val meshgrid : 'xargs_kwargs -> 'r
+val min : 'a -> 'r
+val minimum : 'x1 * 'x2 -> 'r
+val mod_ : 'x1 * 'x2 -> 'r
+val modf : 'x -> 'r
+val moveaxis : 'a * 'source * 'destination -> 'r
+val msort : 'a -> 'r
+val multiply : 'x1 * 'x2 -> 'r
+val nanargmax : 'a -> 'r
+val nanargmin : 'a -> 'r
+val nancumprod : 'a -> 'r
+val nancumsum : 'a -> 'r
+val nanmax : 'a -> 'r
+val nanmean : 'a -> 'r
+val nanmedian : 'a -> 'r
+val nanmin : 'a -> 'r
+val nanpercentile : 'a * 'q -> 'r
+val nanprod : 'a -> 'r
+val nanquantile : 'a * 'q -> 'r
+val nanstd : 'a -> 'r
+val nansum : 'a -> 'r
+val nan_to_num : 'x -> 'r
+val nanvar : 'a -> 'r
+val ndim : 'a -> 'r
+val negative : 'x -> 'r
+val nextafter : 'x1 * 'x2 -> 'r
+val nonzero : 'a -> 'r
+val not_equal : 'x1 * 'x2 -> 'r
+val number : 'x -> 'r
+val ones : 'shape -> 'r
+val ones_like : 'a -> 'r
+val outer : 'a * 'b -> 'r
+val packbits : 'a -> 'r
+val pad : 'array * 'pad_width -> 'r
+val percentile : 'a * 'q -> 'r
+val piecewise : 'x * 'condlist * 'funclist * 'xargs * 'xkw -> 'r
+val poly : 'seq_of_zeros -> 'r
+val polyadd : 'a1 * 'a2 -> 'r
+val polyder : 'p -> 'r
+val polyint : 'p -> 'r
+val polymul : 'a1 * 'a2 -> 'r
+val polysub : 'a1 * 'a2 -> 'r
+val polyval : 'p * 'x -> 'r
+val positive : 'x -> 'r
+val power : 'x1 * 'x2 -> 'r
+val prod : 'a -> 'r
+val product : 'a -> 'r
+val promote_types : 'a * 'b -> 'r
+val ptp : 'a -> 'r
+val quantile : 'a * 'q -> 'r
+val rad2deg : 'x -> 'r
+val radians : 'x -> 'r
+val ravel : 'a -> 'r
+val ravel_multi_index : 'multi_index * 'dims -> 'r
+val real : 'value -> 'r
+val reciprocal : 'x -> 'r
+val remainder : 'x1 * 'x2 -> 'r
+val repeat : 'a * 'repeats -> 'r
+val reshape : 'a * 'newshape -> 'r
+val resize : 'a * 'new_shape -> 'r
+val result_type : 'xargs -> 'r
+val right_shift : 'x1 * 'x2 -> 'r
+val rint : 'x -> 'r
+val roll : 'a * 'shift -> 'r
+val rollaxis : 'a * 'axis -> 'r
+val roots : 'p -> 'r
+val rot90 : 'm -> 'r
+val round : 'a -> 'r
+val round_ : 'a -> 'r
+val row_stack : 'tup -> 'r
+val save : 'file * 'arr -> 'r
+val savez : 'file * 'xargs * 'xkwds -> 'r
+val searchsorted : 'a * 'v -> 'r
+val select : 'condlist * 'choicelist -> 'r
+val setdiff1d : 'ar1 * 'ar2 -> 'r
+val setxor1d : 'ar1 * 'ar2 -> 'r
+val shape : 'a -> 'r
+val sign : 'x -> 'r
+val signbit : 'x -> 'r
+val signedinteger : 'x -> 'r
+val sin : 'x -> 'r
+val sinc : 'x -> 'r
+val sinh : 'x -> 'r
+val size : 'a -> 'r
+val sometrue : 'a -> 'r
+val sort : 'a -> 'r
+val sort_complex : 'a -> 'r
+val split : 'ary * 'indices_or_sections -> 'r
+val sqrt : 'x -> 'r
+val square : 'x -> 'r
+val squeeze : 'a -> 'r
+val stack : 'arrays -> 'r
+val std : 'a -> 'r
+val subtract : 'x1 * 'x2 -> 'r
+val sum : 'a -> 'r
+val swapaxes : 'a * 'axis1 * 'axis2 -> 'r
+val take : 'a * 'indices -> 'r
+val take_along_axis : 'arr * 'indices * 'axis -> 'r
+val tan : 'x -> 'r
+val tanh : 'x -> 'r
+val tensordot : 'a * 'b -> 'r
+val tile : 'a * 'reps -> 'r
+val trace : 'a -> 'r
+val transpose : 'a -> 'r
+val trapz : 'y -> 'r
+val tri : 'n -> 'r
+val tril : 'm -> 'r
+val tril_indices : 'xargs_kwargs -> 'r
+val tril_indices_from : 'arr -> 'r
+val trim_zeros : 'filt -> 'r
+val triu : 'm -> 'r
+val triu_indices : 'xargs_kwargs -> 'r
+val triu_indices_from : 'arr -> 'r
+val true_divide : 'x1 * 'x2 -> 'r
+val trunc : 'x -> 'r
+val uint16 : 'x -> 'r
+val uint32 : 'x -> 'r
+val uint64 : 'x -> 'r
+val uint8 : 'x -> 'r
+val unique : 'ar -> 'r
+val union1d : 'ar1 * 'ar2 -> 'r
+val unpackbits : 'a -> 'r
+val unravel_index : 'indices * 'shape -> 'r
+val unsignedinteger : 'x -> 'r
+val unwrap : 'p -> 'r
+val vander : 'x -> 'r
+val var : 'a -> 'r
+val vdot : 'a * 'b -> 'r
+val vectorize : 'pyfunc -> 'r
+val vsplit : 'ary * 'indices_or_sections -> 'r
+val vstack : 'tup -> 'r
+val where_ : 'condition -> 'r
+val zeros : 'shape -> 'r
+val zeros_like : 'a -> 'r
+
+
+(* 
+Not supported :
+c_
+cdouble
+complex_
+ComplexWarning
+csingle
+double
+int_
+float_
+logaddexp
+logaddexp2
+ndarray
+mgrid
+object_
+ogrid
+r_
+set_printoptions
+single
+*)
