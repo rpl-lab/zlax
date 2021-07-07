@@ -6,6 +6,7 @@ from typing import Any
 from sys import stdin, stdout, stderr
 from dataclasses import dataclass
 from enum import Enum, auto
+from jax.numpy import logical_not
 
 from .muflib import Node, step, reset, init, register_pytree_node_dataclass, J_dataclass
 from jax.tree_util import register_pytree_node_class
@@ -493,6 +494,16 @@ def _lsr(x):
         assert False, "Not implemented in Python"
     return _
 lsr = _lsr
+
+#  ( & ) operator
+def _a(x):
+    return (lambda y : np.logical_and(x, y))
+#  ( && ) operator
+_aa = _a
+
+#  ( || ) operator
+def _vv(x):
+    return (lambda y : np.logical_or(x, y))
 
 
 def compare(x):
