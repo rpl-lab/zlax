@@ -1,0 +1,13 @@
+(rule
+ (targets jax.zci numpy.zci)
+ (deps (:zli jax.zli numpy.zli) )
+ (action (run zeluc %{zli})))
+
+(library
+ (name zlaxlib)
+ (public_name zelus-jax))
+
+(install
+ (package zelus-jax)
+ (section share)
+ (files jax.zci numpy.zci))
