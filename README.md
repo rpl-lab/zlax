@@ -9,7 +9,7 @@ Python and Zelus interfaces for the [Zelus](https://github.com/INRIA/zelus) to [
 pip install . 
 
 # zelus-jax
-opam install . 
+opam pin -k path .
 ```
 
 ## Usage
