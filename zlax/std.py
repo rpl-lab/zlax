@@ -88,6 +88,9 @@ def min_float(x):
 max_int = max_float
 min_int = min_float
 
+def _mod(x):
+    return (lambda y : np.fmod(x, y))
+
 def sqrt(x):
     return np.sqrt(x)
 
@@ -377,7 +380,7 @@ def _s(x):
 
 # ( = ) operator
 def _e(x):
-    return (lambda y : np.equal(x, y))
+    return (lambda y : x == y)
 
 # ( <> ) operator
 def _iu(x):
@@ -431,24 +434,19 @@ def _q(x):
     return (lambda y : np.floor_divide(x, y))
 
 # ( ~-. ) operator
-def _lmo(x):
-    return _lm(x)
+_lmo = _lm
 
 # ( +. ) operator
-def _po(x):
-    return (lambda y : _p(x)(y))
+_po = _p
 
 # ( -. ) operator
-def _mo(x):
-    return (lambda y : _m(x)(y))
+_mo = _m
 
 # ( *. ) operator
-def _so(x):
-    return (lambda y : _s(x)(y))
+_so = _s
 
 # ( /. ) operator
-def _qo(x):
-    return (lambda y : _q(x)(y))
+_qo =  _q
 
 # ( ** ) operator
 def _ss(x):
