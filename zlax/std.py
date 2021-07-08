@@ -12,7 +12,7 @@ from .muflib import Node, step, reset, init, register_pytree_node_dataclass, J_d
 from jax.tree_util import register_pytree_node_class
 
 
-def _print(end='', f=stdout, *args, **kwargs):
+def _print(*args, end='', f=stdout,**kwargs):
     print(*args, **kwargs, end=end, file=f)
     return ()
 
@@ -20,14 +20,14 @@ print_char = _print
 print_string = _print
 print_int = _print
 print_float = _print
-print_newline = lambda : _print('\n')
+print_newline = lambda _: _print('\n')
 print_endline = lambda *args, **kwargs : _print(end='\n', *args, **kwargs)
 prerr_char = lambda *args, **kwargs : _print(f=stderr, *args, **kwargs)
 prerr_string = lambda *args, **kwargs : _print(f=stderr, *args, **kwargs)
 prerr_int = lambda *args, **kwargs : _print(f=stderr, *args, **kwargs)
 prerr_float = lambda *args, **kwargs : _print(f=stderr, *args, **kwargs)
 prerr_endline = lambda : _print( '\n', f=stderr)
-prerr_newline = lambda *args, **kwargs : _print(end='\n', f=stderr, *args, **kwargs)
+prerr_newline = lambda _, *args, **kwargs : _print(end='\n', f=stderr, *args, **kwargs)
 
 def mod(x):
     return (lambda y: np.mod(x, y))
@@ -136,17 +136,10 @@ def floor(x):
 def truncate(x):
     return int_of_float(x)
 
-def infinity():
-    return np.inf
-
-def neg_infinity():
-    return -infinity()
-
-def nan():
-    return np.nan
-
-def epsilon_float():
-    return np.finfo(float).eps
+infinity = np.inf
+neg_infinity = -infinity
+nan = np.nan
+epsilon_float = np.finfo(float).eps
 
 
 @register_pytree_node_dataclass
@@ -175,8 +168,8 @@ def classify_float(x):
 
 
 # type option, None already exists in Python
-@dataclass
-class Some:
+@register_pytree_node_dataclass
+class Some(J_dataclass):
     x: Any
 
 def frexp(x):
@@ -188,14 +181,14 @@ def ldexp(x):
 def modf(x):
     return np.modf(x)
 
-def read_line():
+def read_line(_):
     return input()
 
-def read_int():
-    return int(read_line())
+def read_int(_):
+    return int(read_line(None))
 
-def read_float():
-    return float(read_line())
+def read_float(_):
+    return float(read_line(None))
 
 def open_out(path):
     return open(path, "w+")
@@ -235,7 +228,7 @@ def flush(ch):
     ch.flush()
     return ()
 
-def flush_all(ch):
+def flush_all(_):
     assert False, "Not implemented in Python"
 
 def output_char(ch):
@@ -316,7 +309,7 @@ def input_char(ch):
 def input_line(ch):
     return ch.readline()
 
-def input(ch):
+def input_(ch):
     def _f1(buf):
         def _f2(pos):
             def _f3(length):
