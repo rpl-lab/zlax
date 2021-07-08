@@ -1,11 +1,21 @@
 # zlax
+Python interface for the [Zelus](https://github.com/INRIA/zelus) to [Python-JAX compiler](https://github.com/INRIA/zelus/tree/muf) and runtime libraries.
+`zlax` supports also [ProbZelus](https://github.com/IBM/probzelus) and provides interfaces and runtime librairies to write probabilistic models and run inference.
 
-To install the `zlax` Python package, run `pip install .`.
+## Install
 
-To install the `zelus-jax` Zelus package, run `opam install .`
+```sh
+# zlax
+pip install . 
 
-zls to py compilation : 
+# zelus-jax
+opam install . 
 ```
+
+## Usage
+
+### Compile zls to py
+```sh
 # Zelus
 zeluc -I `zeluc -where`-jax -mufpy <name>.zls
 
@@ -13,4 +23,8 @@ zeluc -I `zeluc -where`-jax -mufpy <name>.zls
 probzeluc -I `zeluc -where`-jax -mufpy <name>.zls
 ```
 
-Simulate zelus code : `zluciole`. See usage using the `-h` option.
+### Simulation
+Run `zluciole`. See usage using the `-h` option.
+
+
+## See also
