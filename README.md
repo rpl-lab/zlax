@@ -19,7 +19,7 @@ opam install .
 # Zelus
 zeluc -I `zeluc -where`-jax -mufpy <name>.zls
 
-# Zelus with probability
+# ProbZelus
 probzeluc -I `zeluc -where`-jax -mufpy <name>.zls
 ```
 
