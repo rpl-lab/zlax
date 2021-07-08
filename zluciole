@@ -4,6 +4,7 @@ from importlib.machinery import SourceFileLoader
 from argparse import ArgumentParser
 from zlax.muflib import init, step
 import os, subprocess, shlex
+from sys import stderr
 
 def main():
     endless = True
@@ -24,9 +25,13 @@ def main():
     main_node = parsed.s[0]
 
     # Compile to Python
-    cmd = "{} -I `zeluc -where`-jax -mufpy {}".format(zlc, parsed.file)
+    cmd = "{} -I `zeluc -where`-jax -deps -mufpy {}".format(zlc, parsed.file)
     print("Compile {} to Python :\n{}".format(parsed.file, cmd))
-    subprocess.run(cmd, shell=True)
+    try:
+        subprocess.check_call(cmd, shell=True)
+    except subprocess.CalledProcessError as e:
+        print("Error :", e, file=stderr)
+        exit(-1)
 
     # Import the node to simulate from the previously compiled Python file
     pyfile = os.path.splitext(parsed.file)[0] + ".py"
