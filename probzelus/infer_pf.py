@@ -4,14 +4,18 @@ import jax.random as jrd
 from jax.tree_util import tree_flatten, tree_unflatten
 from jax.scipy.special import logsumexp
 from jax.lax import cond
+from probzelus.distribution import Support
 
 from .infer import *
 
+from jax import tree_map
 def resample(arg):
     key, probs, particles = arg
-    flat, tree = tree_flatten(particles)
-    flat_resampled = [ jrd.choice(key, v, shape=v.shape, p=probs) for v in flat ]
-    return tree_unflatten(tree, flat_resampled)
+    def choice(a):
+        n = a.shape[0]
+        idx = jrd.choice(key, np.arange(n), shape=(n,), p=probs)
+        return a[idx]
+    return tree_map(choice, particles)
 
 ### Inference
 def infer(n):
@@ -33,7 +37,7 @@ def infer(n):
                     "particles" : resampled,
                     "proba" : (np.zeros(n), keys),
                     "key" : key
-                }, np.transpose(np.vstack((values, probs)))
+                }, Support(values, probs)
 
             def get_particles_number(self):
                 return n
