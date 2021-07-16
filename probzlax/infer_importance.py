@@ -1,5 +1,5 @@
-import jax.numpy as np
 from jax.tree_util import register_pytree_node_class
+from probzlax.distribution import Support
 
 from .infer import *
 
@@ -19,7 +19,7 @@ def infer(n):
                     **state,
                     "particles" : particles,
                     "proba" : proba
-                }, np.transpose(np.vstack((values, probs)))
+                }, Support(values, probs)
             
             def get_particles_number(self):
                 return n
