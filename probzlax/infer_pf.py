@@ -4,7 +4,7 @@ import jax.random as jrd
 from jax.tree_util import tree_flatten, tree_unflatten
 from jax.scipy.special import logsumexp
 from jax.lax import cond
-from probzelus.distribution import Support
+from probzlax.distribution import Support
 
 from .infer import *
 
