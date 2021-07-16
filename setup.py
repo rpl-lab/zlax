@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name="zlax",
     version="2.2",
-    packages=["zlax", "probzelus"],
+    packages=["zlax", "probzlax"],
     scripts=['zluciole'],
     description="Librairies for the Python backend of Zelus using JAX.",
     author="Reyyan Tekin",
