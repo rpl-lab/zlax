@@ -1,7 +1,6 @@
 import jax.numpy as np
 from jax.tree_util import register_pytree_node_class
 import jax.random as jrd
-from jax.tree_util import tree_flatten, tree_unflatten
 from jax.scipy.special import logsumexp
 from jax.lax import cond
 from probzlax.distribution import Support
@@ -82,7 +81,7 @@ def infer_ess_resample(n):
                         "particles" : resampled,
                         "proba" : (np.zeros(n), keys),
                         "key" : key
-                    }, np.transpose(np.vstack((values, probs)))
+                    }, Support(values, probs)
 
                 def get_particles_number(self):
                     return n
