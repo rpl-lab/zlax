@@ -80,13 +80,15 @@ def snd(x):
     return x[1]
 
 def max_float(x):
-    return (lambda y : np.max(x, y))
+    return (lambda y : np.fmax(x, y))
 
 def min_float(x):
-    return (lambda y : np.min(x, y))
+    return (lambda y : np.fmin(x, y))
 
 max_int = max_float
 min_int = min_float
+max = max_float
+min = min_float
 
 def _mod(x):
     return (lambda y : np.fmod(x, y))
