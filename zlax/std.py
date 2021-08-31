@@ -448,7 +448,8 @@ _mo = _m
 _so = _s
 
 # ( /. ) operator
-_qo =  _q
+def _qo(x):
+    return (lambda y : np.divide(x, y))
 
 # ( ** ) operator
 def _ss(x):
