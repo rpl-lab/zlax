@@ -25,7 +25,7 @@ def main():
     main_node = parsed.s[0]
 
     # Compile to Python
-    cmd = "{} -I `zeluc -where`-jax -deps -mufpy {}".format(zlc, parsed.file)
+    cmd = "{} -I `zeluc -where`-jax -deps -jax {}".format(zlc, parsed.file)
     print("Compile {} to Python :\n{}".format(parsed.file, cmd))
     try:
         subprocess.check_call(cmd, shell=True)
@@ -35,7 +35,7 @@ def main():
 
     # Import the node to simulate from the previously compiled Python file
     pyfile = os.path.splitext(parsed.file)[0] + ".py"
-    module = SourceFileLoader("mufpy_module", pyfile).load_module()
+    module = SourceFileLoader("jax_module", pyfile).load_module()
     s = init(getattr(module, main_node))
 
     # Simulation loop

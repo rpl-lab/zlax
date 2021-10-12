@@ -17,10 +17,10 @@ opam pin -k path .
 ### Compile zls to py
 ```sh
 # Zelus
-zeluc -I `zeluc -where`-jax -mufpy <name>.zls
+zeluc -I `zeluc -where`-jax -jax <name>.zls
 
 # ProbZelus
-probzeluc -I `zeluc -where`-jax -mufpy <name>.zls
+probzeluc -I `zeluc -where`-jax -jax <name>.zls
 ```
 
 ### Simulation
