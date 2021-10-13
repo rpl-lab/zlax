@@ -1,4 +1,4 @@
-from distrax import Normal, Uniform, Bernoulli, Categorical
+from distrax import Normal, Uniform, Bernoulli
 from jax.random import PRNGKey
 from jax.random import split as jrd_split
 from jax.random import beta as jrd_beta
@@ -6,16 +6,24 @@ from jax.random import poisson as jrd_poisson
 from jax.random import categorical
 from jax.scipy.special import gammaln
 import jax.numpy as np
-from jax.tree_util import tree_flatten, tree_unflatten, register_pytree_node_class, register_pytree_node
+from jax.tree_util import register_pytree_node_class
 from jax import tree_map
 import random as py_random
 
-def gaussian (mean, sigma2): return Normal(loc=mean, scale=np.sqrt(sigma2))
-def uniform_float (low, high): return Uniform(low=low, high=high)
-def bernoulli (p): return Bernoulli(probs=p)
+
+def gaussian(mean, sigma2):
+    return Normal(loc=mean, scale=np.sqrt(sigma2))
 
 
-class Beta():
+def uniform_float(low, high):
+    return Uniform(low=low, high=high)
+
+
+def bernoulli(p):
+    return Bernoulli(probs=p)
+
+
+class Beta:
     def __init__(self, a, b):
         self.a, self.b = a, b
 
@@ -31,10 +39,13 @@ class Beta():
     def variance(self):
         total = self.a + self.b
         return self.a * self.b / (total ** 2 * (total + 1))
-def beta (a, b) : return Beta(a, b)
 
 
-class Poisson():
+def beta(a, b):
+    return Beta(a, b)
+
+
+class Poisson:
     def __init__(self, lambd):
         self.lambd = lambd
 
@@ -49,23 +60,25 @@ class Poisson():
 
     def variance(self):
         return self.lambd
-def poisson (lambd) : return Poisson(lambd)
+
+
+def poisson(lambd):
+    return Poisson(lambd)
 
 
 @register_pytree_node_class
 class Support():
-    def __init__(self, values, logits):   
-        # TODO : MERGE
+    def __init__(self, values, logits):
         self.values = values
         self.logits = logits
         self.probs = self.logits
-    
+
     def sample(self, seed):
         idx = categorical(key=seed, logits=self.logits)
         return np.take(self.values, idx)
 
     def log_prob(self, val):
-        np.where(self.values==val)
+        idx = np.where(self.values == val)
         return np.take(self.logits, idx)
 
     def mean(self):
@@ -76,13 +89,14 @@ class Support():
         return np.average(np.square(self.values - mean))
 
     def block_until_ready(self):
-        tree_map(lambda x : x.block_until_ready(), self.values)
-        tree_map(lambda x : x.block_until_ready(), self.logits)
+        tree_map(lambda x: x.block_until_ready(), self.values)
+        tree_map(lambda x: x.block_until_ready(), self.logits)
         return
-    
+
     ## JAX methods to be able to vectorize
     def tree_flatten(self):
         return ((self.values, self.probs), None)
+
     @classmethod
     def tree_unflatten(cls, aux_data, children):
         return cls(*children)
@@ -91,43 +105,53 @@ class Support():
 def score(distrib, x):
     return distrib.log_prob(x)
 
+
 def seed(seed=0):
     def decorator(func):
         def aux(*args, **kwargs):
             aux._k, aux.key = jrd_split(aux._k)
             return func(*args, **kwargs)
+
         aux._k, aux.key = jrd_split(PRNGKey(seed))
         return aux
+
     return decorator
 
 
 def draw(distrib, key=None):
     """
-    If draw is vectorized, draw need an argument key in order to be able 
-    to draw different values in parallel. If this argument is not given, 
+    If draw is vectorized, draw need an argument key in order to be able
+    to draw different values in parallel. If this argument is not given,
     the same key may be used for each instance of the vectorized draw.
     """
+
     def _draw(d, k):
         if k is None:
             k = PRNGKey(py_random.randint(0, 1000))
         return d.sample(seed=k)
+
     return _draw(distrib, key)
 
 
 def mean_float(d):
-    return np.average(d.values, weights=d.probs, axis=0)
+    return d.mean()
+
+
 mean_int = mean_float
 mean_bool = mean_float
 
-def stats_float(t):
-    mean = mean_float(t)
-    mu = np.average(np.square(t - mean))
+
+def stats_float(d):
+    mean = d.mean()
+    mu = d.variance()
     return mean, mu
+
 
 def split(d):
     p = d.probs
     v = d.values
     return Support(v[0], p), Support(v[1], p)
+
 
 def split_array(t):
     return t
