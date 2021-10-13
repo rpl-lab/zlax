@@ -8,39 +8,35 @@ from jax.numpy import array as np_array
 def grad(f):
     def _step(instance, args):
         s, o = step(instance, args)
-        return o, s # reverse order
+        return o, s  # reverse order
+
     grad_fun = jgrad(_step, argnums=1, has_aux=True)
 
     @register_pytree_node_class
     class Grad_node(Node):
         def init(self):
-            return { "state_f" : init(f) }
+            return {"state_f": init(f)}
 
         def step(self, state, i):
             o, s = grad_fun(state["state_f"], i)
-            
-            return { 
-                **state, 
-                "state_f" : s
-            }, o
+
+            return {**state, "state_f": s}, o
+
     return Grad_node
 
 
 def vmap(f, n):
     vmap_fun = jvmap(step)
-    
+
     @register_pytree_node_class
     class Vmap_node(Node):
         def init(self):
-            return { "state_f" : jvmap(lambda _: init(f)) (empty(n)) }
+            return {"state_f": jvmap(lambda _: init(f))(empty(n))}
 
         def step(self, state, i):
             s, o = vmap_fun(state["state_f"], i)
-            
-            return { 
-                **state, 
-                "state_f" : s
-            }, o
+
+            return {**state, "state_f": s}, o
 
     return Vmap_node
 

@@ -1,4 +1,5 @@
-def self_init(*args): return None
+def self_init(*args):
+    return None
 
 
 # TODO : implement the Zelus functions bellow
