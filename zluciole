@@ -58,14 +58,17 @@ def main():
             return x.tolist()
         return x
 
+    def map_tuple(f, x):
+        if isinstance(x, tuple):
+            return tuple(map_tuple(f, i) for i in x)
+        else:
+            return f(x)
+
     # Simulation loop
     i = 0
     while i < args.steps:
         s, o = step(s, ())
-        if isinstance(o, tuple):
-            print(f">> {[unbox(x) for x in o]}")
-        else:
-            print(f">> {unbox(o)}")
+        print(f"{map_tuple(unbox, o)}")
         if i != -1:
             i += 1
 
