@@ -3,8 +3,9 @@
 from importlib.machinery import SourceFileLoader
 from argparse import ArgumentParser
 from zlax.muflib import init, step
-import os, subprocess, shlex
+import os, subprocess
 from sys import stderr
+from jax.numpy import ndarray
 
 
 def main():
@@ -52,10 +53,19 @@ def main():
     module = SourceFileLoader("jax_module", pyfile).load_module()
     s = init(getattr(module, args.node))
 
+    def unbox(x):
+        if isinstance(x, ndarray):
+            return x.tolist()
+        return x
+
     # Simulation loop
     i = 0
     while i < args.steps:
-        s, _ = step(s, ())
+        s, o = step(s, ())
+        if isinstance(o, tuple):
+            print(f">> {[unbox(x) for x in o]}")
+        else:
+            print(f">> {unbox(o)}")
         if i != -1:
             i += 1
 
