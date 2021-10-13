@@ -41,7 +41,7 @@ def main():
     # Compile to Python
     links = " ".join([f"-I `zeluc -where`-{l}" for l in args.libraries])
     cmd = f"{zlc} -deps {links} -jax {args.file}"
-    print(f"Compile {args.file} to Python :\n{cmd}")
+
     try:
         subprocess.check_call(cmd, shell=True)
     except subprocess.CalledProcessError as e:
