@@ -8,13 +8,18 @@ from probzlax.distribution import Support
 from .infer import *
 
 from jax import tree_map
+
+
 def resample(arg):
     key, probs, particles = arg
+
     def choice(a):
         n = a.shape[0]
         idx = jrd.choice(key, np.arange(n), shape=(n,), p=probs)
         return a[idx]
+
     return tree_map(choice, particles)
+
 
 ### Inference
 def infer(n):
@@ -33,18 +38,17 @@ def infer(n):
 
                 return {
                     **state,
-                    "particles" : resampled,
-                    "proba" : (np.zeros(n), keys),
-                    "key" : key
+                    "particles": resampled,
+                    "proba": (np.zeros(n), keys),
+                    "key": key,
                 }, Support(values, probs)
 
             def get_particles_number(self):
                 return n
 
         return Infer_pf
+
     return infer_node
-
-
 
 
 # Effective sample size
@@ -55,46 +59,66 @@ def ess(scores):
     den = np.exp(logsumexp(np.multiply(2, scores2)))
     return num / den
 
+
 ### Inference
-def infer_ess_resample(n):  
+def infer_ess_resample(n):
     def infer_treshold(threshold):
         _n_treshold = threshold * n
+
         def infer_node(c):
             @register_pytree_node_class
             class Infer_pf_ess(Infer):
                 def init(self):
                     return super().init(c, n)
-                
+
                 def step(self, state, i):
                     values, probs, particles, (scores, keys) = super().step(state, i, n)
 
                     # Resampling
                     key, subkey = jrd.split(state["key"])
-                    resampled = cond(ess(scores) < _n_treshold, 
-                                    resample, 
-                                    lambda t : t[2], 
-                                    (subkey, probs, particles)
+                    resampled = cond(
+                        ess(scores) < _n_treshold,
+                        resample,
+                        lambda t: t[2],
+                        (subkey, probs, particles),
                     )
 
                     return {
                         **state,
-                        "particles" : resampled,
-                        "proba" : (np.zeros(n), keys),
-                        "key" : key
+                        "particles": resampled,
+                        "proba": (np.zeros(n), keys),
+                        "key": key,
                     }, Support(values, probs)
 
                 def get_particles_number(self):
                     return n
-                                
+
             return Infer_pf_ess
+
         return infer_node
+
     return infer_treshold
 
-def identity(x) : return x
-def const(x) : return identity(x)
-def eval(x) : return identity(x)
-def pair(x, y) : return (x, y)
-def mult(x, y) : return x * y
+
+def identity(x):
+    return x
+
+
+def const(x):
+    return identity(x)
+
+
+def eval(x):
+    return identity(x)
+
+
+def pair(x, y):
+    return (x, y)
+
+
+def mult(x, y):
+    return x * y
+
 
 # TODO : implement the Zelus functions bellow
 """

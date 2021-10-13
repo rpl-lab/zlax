@@ -14,17 +14,16 @@ def infer(n):
 
             def step(self, state, i):
                 values, probs, particles, proba = super().step(state, i, n)
-                
-                return {
-                    **state,
-                    "particles" : particles,
-                    "proba" : proba
-                }, Support(values, probs)
-            
+
+                return {**state, "particles": particles, "proba": proba}, Support(
+                    values, probs
+                )
+
             def get_particles_number(self):
                 return n
 
         return Infer_imp
+
     return infer_node
 
 
