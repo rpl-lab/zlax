@@ -6,27 +6,41 @@ from zlax.muflib import init, step
 import os, subprocess, shlex
 from sys import stderr
 
+
 def main():
-    endless = True
     parser = ArgumentParser(description="zluciole")
     parser.add_argument("file")
-    parser.add_argument('-prob', action='store_true', help='Simulate ProbZelus code')
-    parser.add_argument('-n', metavar='num', type=int, nargs=1, help='Number of steps, endless if not given')
-    parser.add_argument('-s', metavar='node', type=str, nargs=1, help='Node to simulate (required)', required=True)
-    parsed = parser.parse_args()
-    if parsed.n is not None:
-        n_steps = parsed.n[0]
-        assert (n_steps >= 0)
-        endless = False
-    if parsed.prob:
-        zlc = "probzeluc"
-    else : 
-        zlc = "zeluc"
-    main_node = parsed.s[0]
+    parser.add_argument("-prob", action="store_true", help="Simulate ProbZelus code")
+    parser.add_argument(
+        "-n",
+        dest="steps",
+        type=int,
+        help="Number of steps (default never stops)",
+        default=-1,
+    )
+    parser.add_argument(
+        "-s",
+        dest="node",
+        action="store",
+        type=str,
+        help="Node to simulate (required)",
+        required=True,
+    )
+    parser.add_argument(
+        "-I",
+        action="append",
+        dest="libraries",
+        default=["jax"],
+        help="load Zelus library",
+    )
+    args = parser.parse_args()
+
+    zlc = "zeluc" if not args.prob else "probzeluc"
 
     # Compile to Python
-    cmd = "{} -I `zeluc -where`-jax -deps -jax {}".format(zlc, parsed.file)
-    print("Compile {} to Python :\n{}".format(parsed.file, cmd))
+    links = " ".join([f"-I `zeluc -where`-{l}" for l in args.libraries])
+    cmd = f"{zlc} -deps {links} -jax {args.file}"
+    print(f"Compile {args.file} to Python :\n{cmd}")
     try:
         subprocess.check_call(cmd, shell=True)
     except subprocess.CalledProcessError as e:
@@ -34,15 +48,16 @@ def main():
         exit(-1)
 
     # Import the node to simulate from the previously compiled Python file
-    pyfile = os.path.splitext(parsed.file)[0] + ".py"
+    pyfile = os.path.splitext(args.file)[0] + ".py"
     module = SourceFileLoader("jax_module", pyfile).load_module()
-    s = init(getattr(module, main_node))
+    s = init(getattr(module, args.node))
 
     # Simulation loop
     i = 0
-    while endless or i < n_steps :
+    while i < args.steps:
         s, _ = step(s, ())
-        i += 1
+        if i != -1:
+            i += 1
 
 
 if __name__ == "__main__":
