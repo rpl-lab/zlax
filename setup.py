@@ -8,5 +8,5 @@ setup(
     description="Librairies for the Python backend of Zelus using JAX.",
     author="Reyyan Tekin",
     url="https://github.com/rpl-lab/zlax",
-    install_requires=["jax", "distrax"]
+    install_requires=["jax<=0.2.21", "distrax"]
 )
