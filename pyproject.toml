@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "zlax"
+version = "0.2.3"
+description = "Runtime for the JAX-based Zelus backend."
+authors = ["Guillaume Baudart, Louis Mandel, Reyyan Tekin"]
+license = "Apache-2.0"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+jax = "^0.2.21"
+distrax = "^0.1.0"
+
+[tool.poetry.dev-dependencies]
+
+[tool.poetry.scripts]
+zluciole = "zluciole:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
