@@ -5,8 +5,9 @@ Python and Zelus interfaces for the [Zelus](https://github.com/INRIA/zelus) to [
 ## Install
 
 ```sh
-# zlax
-pip install . 
+# zlax and probzlax
+pip install zlax
+pip install probzlax
 
 # zelus-jax
 opam pin -k path .
