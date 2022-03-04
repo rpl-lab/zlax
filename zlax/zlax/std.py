@@ -667,6 +667,9 @@ _aa = _a
 def _vv(x):
     return lambda y: np.logical_or(x, y)
 
+# ( :: ) constructor
+def _bb(x, y):
+    return [x] + y
 
 def compare(x):
     def _f(y):

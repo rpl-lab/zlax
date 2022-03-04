@@ -1,4 +1,4 @@
-from distrax import Normal, Uniform, Bernoulli
+from distrax import Normal, Uniform, Bernoulli, Deterministic
 from jax.random import PRNGKey
 from jax.random import split as jrd_split
 from jax.random import beta as jrd_beta
@@ -17,6 +17,10 @@ def gaussian(mean, sigma2):
 
 def uniform_float(low, high):
     return Uniform(low=low, high=high)
+
+
+def dirac(v):
+    return Deterministic(v)
 
 
 def bernoulli(p):
@@ -140,6 +144,8 @@ def mean_float(d):
 mean_int = mean_float
 mean_bool = mean_float
 
+def mean_matrix(d):
+    return d.mean()
 
 def stats_float(d):
     mean = d.mean()
@@ -195,9 +201,6 @@ val mean_float_list : float list t -> float list
 val mean : ('a -> float) -> 'a t -> float
 val mean_list : ('a -> float) -> 'a list t -> float list
 val mean_signal_present : 'a signal t -> float
-val mean_matrix: Mat.mat t -> Mat.mat
-
-val dirac : 'a -> 'a t
 
 val bernoulli_draw : float -> bool
 val bernoulli_score : float -> bool -> float
