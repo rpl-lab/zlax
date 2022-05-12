@@ -1,6 +1,6 @@
 from zlax.std import *
 from jax import grad as jgrad
-from jax import vmap as jvmap
+from jax import vmap
 from jax.numpy import empty
 from jax.numpy import array as np_array
 
@@ -25,20 +25,20 @@ def grad(f):
     return Grad_node
 
 
-def vmap(f, n):
-    vmap_fun = jvmap(step)
+def zmap(f, n):
+    zmap_fun = vmap(step)
 
     @register_pytree_node_class
-    class Vmap_node(Node):
+    class Zmap_node(Node):
         def init(self):
-            return {"state_f": jvmap(lambda _: init(f))(empty(n))}
+            return {"state_f": vmap(lambda _: init(f))(empty(n))}
 
         def step(self, state, i):
-            s, o = vmap_fun(state["state_f"], i)
+            s, o = zmap_fun(state["state_f"], i)
 
             return {**state, "state_f": s}, o
 
-    return Vmap_node
+    return Zmap_node
 
 
 def array(*x):
