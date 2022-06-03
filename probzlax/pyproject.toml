@@ -7,7 +7,7 @@ license = "Apache-2.0"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-jax = "^0.2.21"
+jax = "0.2.25"
 distrax = "^0.1.0"
 
 [tool.poetry.dev-dependencies]
